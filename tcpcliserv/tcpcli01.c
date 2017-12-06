@@ -4,7 +4,7 @@
  * @Email:  guang334419520@126.com
  * @Filename: tcpcli01.c
  * @Last modified by:   sunshine
- * @Last modified time: 2017-11-23T15:33:46+08:00
+ * @Last modified time: 2017-12-03T15:33:18+08:00
  */
 
 
@@ -33,6 +33,18 @@ main(int argc, char* argv[])
 
 	exit(0);
 }
+/*
+void str_cli(int socket) {
+	char line[MAXLINE];
+	FILE* fpin, *fpout;
+	fpin = Fdopen(socket, "r");
+	fpout = Fdopen(socket, "w");
+
+	while (Fgets(line, MAXLINE, fpin) != NULL) {
+		Fputs(line, fpout);
+	}
+}
+*/
 
 /*
 void

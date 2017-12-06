@@ -1,14 +1,16 @@
-/*************************************************************************
-    > File Name: tcpserv01.c
-    > Author: ma6174
-    > Mail: ma6174@163.com 
-    > Created Time: 2017年11月09日 星期四 15时51分45秒
- ************************************************************************/
+/**
+ * @Author: sunshine
+ * @Date:   2017-11-18T17:45:16+08:00
+ * @Email:  guang334419520@126.com
+ * @Filename: tcpserv01.c
+ * @Last modified by:   sunshine
+ * @Last modified time: 2017-12-03T15:38:44+08:00
+ */
+
 #include "unp/unp.h"
-#include "unp/apuerror.h"
 void str_echo(int );
 void sig_chld(int);
-int 
+int
 main(int argc, char* argv[])
 {
 	int listenfd,connfd;
@@ -24,9 +26,9 @@ main(int argc, char* argv[])
 	Bind(listenfd, (SA*)&servaddr, sizeof(servaddr));
 
 	Listen(listenfd, LISTENQ);
-	
+
 	signal(SIGCHLD, sig_chld);
-	
+
 	socklen_t clilen;
 	for(; ;) {
 		bzero(&cliaddr, sizeof(cliaddr));
@@ -47,8 +49,8 @@ main(int argc, char* argv[])
 	}
 }
 
-
-void 
+/*
+void
 str_echo(int sockfd)
 {
 	ssize_t n;
@@ -61,6 +63,17 @@ again:
 		goto again;
 	else if(n < 0)
 		err_sys("str_echo: read error");
+}
+*/
+void str_echo(int socket) {
+	char line[MAXLINE];
+	FILE *fpin, *fpout;
+	fpin = Fdopen(socket, "r");
+	fpout = Fdopen(socket, "w");
+
+	while (Fgets(line, MAXLINE, fpin) != NULL) {
+		Fputs(line, fpout);
+	}
 }
 
 /*
@@ -75,7 +88,7 @@ void str_echo(int sockfd)
 			return;
 		if(sscanf(line, "%ld%ld", &arg1, &arg2) == 2)
 			snprintf(line, sizeof(line),"%ld\n", arg1 + arg2);
-		else 
+		else
 			snprintf(line,sizeof(line), "input error\n");
 		n = strlen(line);
 		Writen(sockfd, line, n);
@@ -89,7 +102,7 @@ sig_chld(int sig)
 	pid_t pid;
 	int stat;
 
-	while( (pid = waitpid(-1, &stat, WNOHANG)) > 0) 
+	while( (pid = waitpid(-1, &stat, WNOHANG)) > 0)
 		printf("child %d terminated\n", pid);
 	return ;
 }
