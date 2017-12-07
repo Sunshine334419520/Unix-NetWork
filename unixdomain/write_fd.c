@@ -4,7 +4,7 @@
  * @Email:  guang334419520@126.com
  * @Filename: write_fd.c
  * @Last modified by:   sunshine
- * @Last modified time: 2017-12-06T18:21:08+08:00
+ * @Last modified time: 2017-12-07T20:46:22+08:00
  */
 
 #include "unp/unp.h"
@@ -25,7 +25,7 @@ ssize_t write_fd(int fd, void* ptr, size_t nbytes, int sendfd)
 #ifdef HAVE_MSGHDR_MSG_CONTROL
   union {
     struct msghdr msg;
-    struct control[CMSG_SPACE(sizeof(int))];
+    char control[CMSG_SPACE(sizeof(int))];
   } control_un;
 
   struct cmsghdr* cmptr;

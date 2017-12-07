@@ -4,11 +4,13 @@
  * @Email:  guang334419520@126.com
  * @Filename: openfile.c
  * @Last modified by:   sunshine
- * @Last modified time: 2017-12-06T18:08:23+08:00
+ * @Last modified time: 2017-12-07T20:43:55+08:00
  */
 
 
 #include "unp/unp.h"
+
+ssize_t writen_fd(int, void*, size_t, int);
 
 int main(int argc, char const *argv[]) {
   int fd;
@@ -21,10 +23,10 @@ int main(int argc, char const *argv[]) {
 
   }
 
-  if(wirte_fd(atoi(argv[1], "", 1, fd)) < 0) {
+  if(write_fd(atoi(argv[1]), "", 1, fd) < 0) {
 
     exit( (errno > 0) ? errno : 255);
   }
-  
+
   return 0;
 }
